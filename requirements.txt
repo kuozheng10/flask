@@ -1,3 +1,9 @@
 colorama
 Flask
 gunicorn
+Flask 
+render_template 
+request 
+redirect
+SQLAlchemy
+datetime
