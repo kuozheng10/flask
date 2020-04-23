@@ -1,37 +1,36 @@
 {% extends 'base.html' %}
 
-{% block head %} 
+{% block head %}
 <title>Posts</title>
 {% endblock %}
 
 
-{% block body %} 
-<h1>All Posts</h1>
+{% block body %}
+<br>
+<div>
+    <h1 style="display:inline">All Posts</h1>
+    <a style="display:inline" class="btn btn-success float-right" href="/posts/new"> + New Post</a>
+</div>
 
 <hr>
-<h2>Create New Blog Post:</h2>
-<form action='/posts' method='POST'>
-    Title: <input type='text' name='title' id='title'>
-    <br>
-    Author: <input type='text' name='author' id='author'>
-    <br>
-    Post: <input type='text' name='content' id='content'>
-    <br>
-    <input type='submit' value='Post'>
 
-</form>
+{% for post in posts %}
+<!-- for loop 迴圈-->
+<h2>{{ post.title }}</h2>
+<!--用兩個大刮號印出資料-->
+
+{% if post.author %}
+<!-- if else-->
+<small>Written by {{ post.author }} on {{post.date_posted}} </small>
+{% else %}
+<small>Written by Unknown on {{post.date_posted}} </small>
+{% endif %}
+<br>
+<br>
+<p style="white-space:pre-wrap">{{ post.content }}</p>
+<a class="btn btn-danger" href='/posts/delete/{{post.id}}'>Delete</a>
+<a class="btn btn-primary" href='/posts/edit/{{post.id}}'>Edit</a>
+<br>
 <hr>
-
-
-    {% for post in posts %} <!-- for loop 迴圈-->
-        <h2>{{ post.title }}</h2> <!--用兩個大刮號印出資料-->
-    
-        {% if post.author %}<!-- if else-->
-            <h3>By: {{ post.author }}</h3>
-        {% else %}
-            <h3>By: N/A</h3>
-        {% endif %}    
-
-        <p>{{ post.content }}</p>
-    {% endfor %}
-{% endblock %} 
+{% endfor %}
+{% endblock %}

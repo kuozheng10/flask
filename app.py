@@ -19,7 +19,7 @@ def __repr__(self):
 
 # '/'代表網站的根目錄
 @app.route('/')#函式的裝飾(Decorator): 以函式為基礎，提供附加的功能
-def index():
+def home():
     return render_template('index.html')
 
 @app.route('/posts', methods=['GET', 'POST'])
@@ -29,7 +29,7 @@ def posts():
         post_title = request.form['title']
         post_author = request.form['author']
         post_content = request.form['content']
-        new_post = BlogPost(title=post_title, content=post_title, author=post_author)
+        new_post = BlogPost(title=post_title, content=post_content, author=post_author)
         db.session.add(new_post)
         db.session.commit()
         return redirect('/posts')
@@ -43,7 +43,42 @@ def hello(name, id):
 
 @app.route('/onlyget', methods=['GET'])
 def get_req():
-    return 'You an only get this webpga 4'
+    return 'You can only get this webpga 4'
+
+@app.route('/posts/delete/<int:id>')
+def delete(id):
+    post = BlogPost.query.get_or_404(id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect('/posts')
+
+@app.route('/posts/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    
+    post = BlogPost.query.get_or_404(id)
+
+    if request.method == 'POST':
+        post.title = request.form['title']
+        post.author = request.form['author']
+        post.content = request.form['content']
+        db.session.commit()
+        return redirect('/posts')
+    else:
+        return render_template('edit.html', post=post)        
+
+@app.route('/posts/new', methods=['GET', 'POST'])
+def new_post():
+    if request.method == 'POST':
+        post.title = request.form['title']
+        post.author = request.form['author']
+        post.content = request.form['content']
+        new_post = BlogPost(title=post_title, content=post_content, author=post_author)
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect('/posts')
+    else:
+        return render_template('new_post.html')        
+
 
 
 if __name__ == '__main__':#如果以主程式執行

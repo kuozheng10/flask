@@ -1,9 +1,24 @@
 {% extends 'base.html' %}
 
-{% block head %} 
+{% block head %}
 <title>Home</title>
 {% endblock %}
 
-{% block body %} 
+{% block body %}
+<br>
 <h1>My Home Page</h1>
-{% endblock %} 
+<br>
+<main role="main">
+    <div class="jumbotron">
+        <div class="col-sm-8 mx-auto">
+            <h1>Welcome</h1>
+            <p>This example is my first Flask program</p>
+
+            <p>
+                <a class="btn btn-primary" href="/posts" role="button">Go to posts
+                    &raquo;</a>
+            </p>
+        </div>
+    </div>
+</main>
+{% endblock %}
